@@ -4,6 +4,8 @@ package tests;
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 
+import java.io.File;
+
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -46,7 +48,7 @@ public class TC02_LearnWithBDD {
 			.put("api/users/12")
 			.prettyPrint();
 			
-		}
+	}
 		
 	// Test to delete a user from the API
 	@Test
@@ -55,15 +57,26 @@ public class TC02_LearnWithBDD {
 			.when()
 			.delete("api/users/2")
 			.prettyPrint();
-		}
+	}
 		
 	// Test to fetch a single user's details from the API
 	@Test
 	public void getSingleUser() {
 		given()
-			.when()
+			.when()   
 			.get("api/users/12")
 			.prettyPrint();		
-		}
+	}
+	
+	// Test to create a new user via POST request using Jsonfile
+	@Test
+	public void createuserusingJsonFile() {
+		File jsonFile = new File("postData.json");
+		given().header("content-Type", "application/json")
+		.body(jsonFile)
+		.when()
+		.post("api/users")
+		.prettyPrint();		
+	}
 
 }
